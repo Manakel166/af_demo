@@ -1,0 +1,141 @@
+*** Settings ***
+Documentation     Mapping between the Steps/Workflow tasks and the Technical Actions
+...
+...               Ex:
+...               Step is :
+...               - \ On Homepage, Select "Meilleurs Offres"
+...
+...               Technical Actions are :
+...               - Assert you are on Homepage
+...               - Click on the "Meilleurs Offres" entry in the main menu
+...               - Click on the "Voir les Meilleurs Offres" button in the new screen
+Resource          af.technical.txt
+Library           DateTime
+Variables         variables.py
+
+*** Keywords ***
+From "Actualité des Vols", Go Back to "Main Page"
+    I'm on "Actualité des Vols"
+    Go Back One Page
+
+From "Europe" Area, Select the "${City}" Destination
+    I'm on "Europe" Area
+    ${is_on_Web}=    Check If Test Has Tag    Channel:Web
+    Run Keyword If    '${is_on_Web}'=='True'    Web Scroll to "${City}" Destination
+    ...    ELSE    Swipe Vertically to "${City}" Destination
+
+From "Main Page", Select "Actualité des Vols"
+    I'm on "Main Page"
+    Click Element    ${Actualité_des_Vols_on_Homepage}
+
+From "Main Page", Select "Meilleures Offres"
+    I'm on "Main Page"
+    ${is_on_B2C}=    Check If Test Has Tag    Appli:B2C
+    Comment    Run Keyword If    '${is_on_B2C}'=='True'    Sleep    10s
+    Click Element    ${Meilleures_Offres_on_Homepage}
+    Comment    Run Keyword If    '${is_on_B2C}'=='True'    Wait Until Keyword Succeeds    30s    3s    Page Should Contain Element
+    ...    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}
+    Comment    Run Keyword If    '${is_on_B2C}'=='True'    Wait Until Keyword Succeeds    30s    3s    Page Should Contain Element
+    ...    ${B2C_Voir_Nos_Meilleures_Offres}
+    Comment    Run Keyword If    '${is_on_B2C}'=='True' and '${OS}'=='iOS'    Sleep    10s
+    Comment    Run Keyword If    '${is_on_B2C}'=='True'    Click Element    ${B2C_Voir_Nos_Meilleures_Offres}
+
+From "Meilleures Offres", Select the "Europe" Area
+    I'm on "Meilleures Offres"
+    Comment    ${is_on_WebMobile}=    Check If Test Has Tag    Channel:WebMobile
+    Comment    ${is_on_Web}=    Check If Test Has Tag    Channel:Web
+    Comment    ${is_on_RealDevice}=    Check If Test Has Tag    Station:RealDevice
+    Comment    Run Keyword If    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
+    ...    ELSE IF    '${is_on_RealDevice}'=='True'    Swipe Vertically to "Europe" Area
+    Comment    Run Keyword If    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
+    ...    ELSE    Swipe Vertically to "Europe" Area
+    Comment    Run Keyword If    '${is_on_RealDevice}'=='True'    Swipe Vertically to "Europe" Area
+    ...    ELSE IF    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
+    Run Keyword If    '${STATION}'=='RealDevice'    Swipe Vertically to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Emulator' and '${APPLI}'=='B2C'    Swipe Vertically to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Emulator'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Desktop'    Web Scroll to "Europe" Area
+
+From "X", do "Y"
+    I'm on "X"
+    Do "Y"
+
+I'm on "Actualité des Vols"
+    Wait For Location by Element    ${Actualité_des_Vols_on_Title_Bar}    20s
+
+I'm on "Europe" Area
+    Wait For Location by Element    ${Tile_Europe_selected_on_Europe_Area}    30s    2s
+
+I'm on "Main Page"
+    Wait For Location by Element    ${Bienvenue_on_Homepage}
+
+I'm on "Meilleures Offres"
+    Wait For Location by Element    ${Meilleures_Offres_on_Title_Bar}
+
+I'm on "${City}" Destination
+    Log    Destination:'${City}'
+    Log    ${DestinationsDisplayName.${APPLI}['${City}']}
+    Set Tags    DifferenceByAppli:B2CvsBMWvsDynamo
+    ${locator_for_City}=    Replace String    ${Destination_ROME_ROM}    Rome    ${DestinationsDisplayName.${APPLI}['${City}']}
+    Wait For Location by Element    ${locator_for_City}    20s    5s
+
+I'm on "X"
+    Wait For Location    "X"
+
+On "Actualité des Vols", Check the Displayed Date is Today Date
+    I'm on "Actualité des Vols"
+    ${today} =    Get Current Date
+    Comment    Day is Displayed separately
+    ${current_day_of_month}=    Convert Date    ${today}    result_format=%d
+    ${locator_for_Day}=    Replace String    ${ui_Flight_Day_On_Actualité_des_Vols}    'Day'    ${current_day_of_month}
+    Page Should Contain Element    ${locator_for_Day}
+    Comment    Month is Displayed as a Local Abreviated Month
+    ${current_month_as_local_abrevation}=    Convert Date    ${today}    result_format=%b
+    ${locator_for_Month}=    Replace String    ${ui_Flight_Month_On_Actualité_des_Vols}    'Month'    ${current_month_as_local_abrevation}
+    Page Should Contain Element    ${locator_for_Month}
+
+On "Europe Area", Check Departure is "Paris"
+    I'm on "Europe" Area
+    ${is_on_Web}=    Check If Test Has Tag    Channel:Web
+    ${is_on_WebMobile}=    Check If Test Has Tag    Channel:WebMobile
+    Run keyword If    '${is_on_Web}'=='True'    Location Should Contain    origine=PAR
+    ...    ELSE IF    '${is_on_WebMobile}'=='True'    Log    Unable to check Departure on WebMobile
+    ...    ELSE    Page Should Contain Element    ${Au_Depart_de_Paris2}
+
+On "Europe" Area, Check List of Destinations is displayed
+    I'm on "Europe" Area
+    Wait For Element    ${List_of_Destinations_on_Europe_Area}    10s
+
+On "Meilleures Offres", Check Departure is "Paris"
+    I'm on "Meilleures Offres"
+    Page Should Contain Element    ${Au_Depart_de_Paris}    \    # Departure is shown on this screen whatever the channel
+
+On "Meilleures Offres", Check List of Continents is displayed
+    I'm on "Meilleures Offres"
+    Page Should Contain Element    ${List_of_Continents_on_Meilleurs_Offres}
+
+On "${City}" Destination, Check Departure is Paris
+    I'm on "${City}" Destination
+    ${locator_for_departure}=    Replace String    ${Départ_Paris_PAR}    Paris    ${DestinationsDisplayName.${APPLI}['Paris']}
+    Page Should Contain Element    ${locator_for_departure}
+
+On "${City}" Destination, Check Destination is "${City}"
+    I'm on "${City}" Destination
+    ${locator_for_destination}=    Replace String    ${Destination_ROME_ROM}    Rome    ${DestinationsDisplayName.${APPLI}['${City}']}
+    Page Should Contain Element    ${locator_for_destination}
+
+On "${City}" Destination, Check Flight Date Calendar is displayed
+    I'm on "${City}" Destination
+    Log    Not Recorded Yet    level=WARN
+
+On "${City}" Destination, Check Passengers Selector is displayed
+    I'm on "${City}" Destination
+    Log    Not Recorded Yet    level=WARN
+
+On "X", do" Y"
+    I'm on "X"
+    Do "Y"
+    I'm on "X"

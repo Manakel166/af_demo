@@ -1,0 +1,114 @@
+*** Settings ***
+Documentation     UI Mapping for all channels
+Library           String
+Variables         variables.py
+
+*** Variables ***
+${Bienvenue_on_Homepage}    xpath=//android.widget.TextView[@text='Bienvenue'][@resource-id='com.airfrance.android.dinamoprd:id/welcome']
+${Actualité_des_Vols_on_Homepage}    xpath=//android.widget.TextView[@text='Actualité des vols']
+${Actualité_des_Vols_on_Title_Bar}    xpath=//android.widget.TextView[@text='Actualité des vols'][@resource-id='android:id/action_bar_title']
+${Meilleures_Offres_on_Homepage}    xpath=//android.widget.TextView[@text='Meilleures offres']
+${Au_Depart_de_Paris}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
+${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
+${Tile_Asie}      xpath=//android.widget.TextView[@text='ASIE / MOYEN ORIENT'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${Meilleures_Offres_on_Title_Bar}    xpath=//android.widget.TextView[@text='Meilleures offres'][@resource-id='android:id/action_bar_title']
+${Tile_Ameriques}    xpath=//android.widget.TextView[@text='AMÉRIQUES'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${Tile_Ocean_Indien}    xpath=//android.widget.TextView[@text='AFRIQUE / OCÉAN INDIEN'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${Tile_Asie}      xpath=//android.widget.TextView[@text='ASIE / MOYEN ORIENT'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${Tile_Caraibes}    xpath=//android.widget.TextView[@text='CARAÏBES'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${Tile_Europe}    xpath=//android.widget.TextView[@text='EUROPE'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']
+${ui_Entry_Rome}    xpath=//android.widget.TextView[@text='Rome'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_2_city']
+${Départ_Paris_PAR}    xpath=//android.widget.TextView[@text='Paris'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_3_cell_departure_label']
+${Destination_ROME_ROM}    xpath=//android.widget.TextView[@text='Rome'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_3_cell_arrival_label']
+${Choix_Date_Départ}    id=com.airfrance.android.dinamoprd:id/ebt_choose_departure_date
+${Toggle_aller_retour}    id=com.airfrance.android.dinamoprd:id/ebt_promo_2_return_toggle    # Onglet Aller / Retour dans l'écran de choix de la ville de destination
+${IOS_Back_Arrow_on_Any_Page}    NOT_DEFINED
+${Tile_Europe_selected_on_Europe_Area}    xpath=//android.widget.TextView[@text='EUROPE'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_cell_area_label']    # WARNING: no visible way to distinguish between the tile on the first page and the tile once selected !
+${List_of_Continents_on_Meilleurs_Offres}    xpath=//android.widget.ListView
+${List_of_Destinations_on_Europe_Area}    xpath=//android.widget.ListView[@resource-id='com.airfrance.android.dinamoprd:id/list_view']    #NOT SO PRECISE
+${B2C_Voir_Nos_Meilleures_Offres}    ONLY_FOR_B2C    # Additional Button to be clicked on B2C to access the list of Best Offers
+${ui_Flight_Day_On_Actualité_des_Vols}    xpath=//div[@class='day font-size-xxl'][contains(.,'Day')]    #Template value to be updated
+${ui_Flight_Month_On_Actualité_des_Vols}    xpath=//div[@class='month font-size-l'][contains(.,'Month')]    #Template value to be updated
+${continents_slider}    NOT DEFINED    # Slider for Continents List
+${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    ONLY FOR B2C    # Meilleurs Offres selected on Homepage menu (eg with red highlight)
+
+*** Keywords ***
+Init UI for Web Mobile
+    Set Test Variable    ${Bienvenue_on_Homepage}    xpath=//img[@alt='Air France logo']
+    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    xpath=//span[contains(.,'Statut des vols')]
+    Set Test Variable    ${Actualité_des_Vols_on_Title_Bar}    xpath=//div[@class='bmw-header-title-txt'][contains(.,'des vols')]    #<div class="bmw-header-title-txt">Actualité des vols</div> or //div[@class='bmw-header-title-txt'][contains(translate(.,'é', 'e'),'Actualite des vols')]
+    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//span[contains(.,'Meilleures Offres')]
+    Set Test Variable    ${Au_Depart_de_Paris}    xpath=//select[@id='idDepartureStopover'][contains(.,'Paris PAR')]
+    Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//div[@class='coupcoeur']
+    Set Test Variable    ${Tile_Europe}    xpath=//div[@class='continent'][contains(.,'Europe')]
+    Set Test Variable    ${ui_Entry_Rome}    xpath=//div[@class='promos']//span[.='Rome']
+    Set Test Variable    ${Départ_Paris_PAR}    xpath=//span[@id='allerOD'][contains(.,'Paris -')]
+    Set Test Variable    ${Destination_ROME_ROM}    xpath=//span[@id='allerOD'][contains(.,'- Rome')]
+    Set Test Variable    ${Choix_Date_Départ}    xpath=//div[contains(.,'Choisissez votre date de départ')]
+    Set Test Variable    ${Toggle_aller_retour}    xpath=//div[contains(.,'Choisissez votre date de retour')]    # Onglet Aller / Retour dans l'écran de choix de la ville de destination
+    Set Test Variable    ${Tile_Europe_selected_on_Europe_Area}    xpath=//div[@class='continent choice'][contains(.,'Europe')]
+    Set Test Variable    ${List_of_Continents_on_Meilleurs_Offres}    id=listeContinents
+    Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//div[@class='promos']
+    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//img[@class='bmw-header-title-arrow-back' ]    #xpath=//a[@class='bmw-btn-arrow-back']
+    Set Test Variable    ${continents_slider}    xpath=//div[@class='hScrollerNav']
+
+Init UI for IOS
+    Set Test Variable    ${Bienvenue_on_Homepage}    name=Bienvenue
+    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    xpath=//UIAButton[contains(translate(@label,'é', 'e'), 'Actualite des vols')]
+    Set Test Variable    ${Actualité_des_Vols_on_Title_Bar}    xpath=//UIAStaticText[contains(translate(@label,'é', 'e'), 'Actualite des vols')]
+    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//UIAButton[@name='Meilleures offres']
+    Set Test Variable    ${Au_Depart_de_Paris}    xpath=//UIAStaticText[contains(@name, 'Paris (PAR)')]    #xpath=//UIAStaticText[contains(translate(@label,'é', 'e'), 'Au depart de Paris (PAR)')]
+    Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//UIAStaticText[contains(@name, 'Paris (PAR)')]    #xpath=//UIAStaticText[contains(translate(@label,'é', 'e'), 'Au depart de Paris (PAR)')]
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//UIAStaticText[@name='Meilleures offres']
+    Set Test Variable    ${Tile_Europe}    xpath=//UIATableCell[@name='EUROPE']
+    Set Test Variable    ${ui_Entry_Rome}    xpath=//UIAStaticText[@name='Rome']    #xpath=//UIAStaticText[@name='Rome']
+    Set Test Variable    ${Départ_Paris_PAR}    xpath=//UIAStaticText[@name='Paris']    #xpath=//UIAStaticText[@name='PARIS (PAR)']
+    Set Test Variable    ${Destination_ROME_ROM}    xpath=//UIAStaticText[@name='Rome']    #xpath=//UIAStaticText[@name='ROME (ROM)']
+    Set Test Variable    ${Choix_Date_Départ}    xpath=//UIAStaticText[contains(translate(@label,'é', 'e'), 'Depart le')]
+    Set Test Variable    ${Toggle_aller_retour}    xpath=//UIAStaticText[@name='Retour le']    # Onglet Aller / Retour dans l'écran de choix de la ville de destination
+    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//UIAButton[@name='navigation left arrow']    # Fleche Retour sur IOS
+    Set Test Variable    ${List_of_Continents_on_Meilleurs_Offres}    xpath=//UIATableView
+    Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//UIATableView
+    Set Test Variable    ${Tile_Europe_selected_on_Europe_Area}    xpath=//UIAImage[@name='ebtpromo_EUR']
+
+Init UI for Web
+    Set Test Variable    ${Bienvenue_on_Homepage}    xpath=//a[@class='header__logoAF withPicto']
+    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    xpath=//img[@src='/FR/common/common/img/pictos/horaire.svg']
+    Set Test Variable    ${Actualité_des_Vols_on_Title_Bar}    xpath=//h1[contains(.,'Actualité des vols')]
+    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//img[@src='/FR/common/common/img/pictos/promotion.svg']
+    Set Test Variable    ${Au_Depart_de_Paris}    xpath=//select[@id='idDepartureStopover'][contains(.,'Paris PAR')]
+    Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//h1[@class='titrePromoBlue'][contains(.,'Nos meilleures offres')]
+    Set Test Variable    ${Tile_Europe}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
+    Set Test Variable    ${ui_Entry_Rome}    xpath=//div[@id='blocContent']//a[.='Rome']
+    Set Test Variable    ${Départ_Paris_PAR}    xpath=//p[contains(.,'Paris -')]
+    Set Test Variable    ${Destination_ROME_ROM}    xpath=//p[contains(.,'- Rome')]
+    Set Test Variable    ${Choix_Date_Départ}    xpath=//div[contains(.,'Choisissez votre date de départ')]
+    Set Test Variable    ${Toggle_aller_retour}    xpath=//div[contains(.,'Choisissez votre date de retour')]    # Onglet Aller / Retour dans l'écran de choix de la ville de destination
+    Set Test Variable    ${Tile_Europe_selected_on_Europe_Area}    //ul[@class='Prune']//a[.='Europe']
+    Set Test Variable    ${List_of_Continents_on_Meilleurs_Offres}    xpath=//*[@id="AllPromosBlock"]
+    Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//*[@id="blocContent"]
+    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    id=idNavHomeLink
+    Set Test Variable    ${B2C_Voir_Nos_Meilleures_Offres}    xpath=//a[@id='idValidateButtonPromosDynamique']/span/span
+    Set Test Variable    ${continents_slider}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
+    Set Test Variable    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    xpath=//div[@id='bg_menu_img1'][@class='bg_menu_img bg_color_red']
+
+Init UI for Web Mobile (WebView)
+    Set Test Variable    ${Bienvenue_on_Homepage}    name=Air France - Réservation de Billet d'avion, Vol pas cher
+    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    name=Statut des vols \
+    Set Test Variable    ${Actualité_des_Vols_on_Title_Bar}    xpath=//span[@id='titlespan'][contains(.,'Actualité des vols')]
+    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//span[contains(.,'Meilleures Offres')]
+    Set Test Variable    ${Au_Depart_de_Paris}    xpath=//select[@id='idDepartureStopover'][contains(.,'Paris PAR')]
+    Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//div[@class='link cms_txt_red coupcoeur-image-caption']
+    Set Test Variable    ${Tile_Europe}    xpath=//div[@class='continent'][contains(.,'Europe')]
+    Set Test Variable    ${ui_Entry_Rome}    xpath=//div[@class='promos']//span[.='Rome']
+    Set Test Variable    ${Départ_Paris_PAR}    xpath=//span[@id='allerOD'][contains(.,'PARIS - ROME')]
+    Set Test Variable    ${Destination_ROME_ROM}    xpath=//span[@id='allerOD'][contains(.,'PARIS - ROME')]
+    Set Test Variable    ${Choix_Date_Départ}    xpath=//div[contains(.,'Choisissez votre date de départ')]
+    Set Test Variable    ${Toggle_aller_retour}    xpath=//div[contains(.,'Choisissez votre date de retour')]    # Onglet Aller / Retour dans l'écran de choix de la ville de destination
+    Set Test Variable    ${Tile_Europe_selected_on_Europe_Area}    xpath=//div[@class='continent \ choice '][contains(.,'Europe')]
+    Set Test Variable    ${List_of_Continents_on_Meilleurs_Offres}    id=listeContinents
+    Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//div[@class='promos']
+    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//a[@class='bmw-btn-arrow-back']

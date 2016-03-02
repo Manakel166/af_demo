@@ -1,0 +1,60 @@
+*** Settings ***
+Resource          ../resources/af.utils.txt
+Resource          af.ui.txt
+Resource          ../resources/web.platform.txt
+Resource          ../resources/mobile.platform.txt
+
+*** Keywords ***
+Go Back One Page
+    [Documentation]    Navigate back one Page using the Platform specific function
+    ...    IOS: Back Arrow (whatever the channel)
+    ...    else "Back Button"
+    ${is_on_iOS}=    Check If Test Has Tag    OS:iOS
+    ${is_on_MacOS}=    Check If Test Has Tag    OS:MacOs
+    ${is_on_B2C}=    Check If Test Has Tag    Appli:B2C
+    Run Keyword If    '${is_on_iOS}'=='False' and '${is_on_MacOS}'=='False' and '${is_on_B2C}'=='False'    Go Back
+    ...    ELSE    Go Back Using Page Back Arrow
+
+Go Back Using Page Back Arrow
+    Click Element    ${IOS_Back_Arrow_on_Any_Page}
+
+Swipe Vertically to "Europe" Area
+    Swipe Into View    ${Tile_Europe}
+    Click Element    ${Tile_Europe}
+
+Swipe Horizontally to "Europe" Area
+    ${slider}=    Find Elements    ${continents_slider}    True    True
+    ${slider_y}=    Set Variable    ${slider.location['y']}
+    Log    ${slider_y}
+    ${better_slider_y}=    Set Variable If    ${slider_y}<0    495    ${slider_y}
+    Swipe Into View    ${Tile_Europe}    100    0    y=${better_slider_y}
+    Click Element    ${Tile_Europe}
+
+Web Scroll to "Europe" Area
+    Comment    Focus    ${Tile_Europe}
+    Click Element    ${Tile_Europe}
+
+Web Scroll to "${City}" Destination
+    Comment    Focus    ${ui_Entry_Rome}
+    ${locator_for_City}=    Replace String    ${ui_Entry_Rome}    Rome    ${City}
+    Click Element    ${locator_for_City}
+
+Swipe Vertically to "${City}" Destination
+    ${locator_for_City}=    Replace String    ${ui_Entry_Rome}    Rome    ${City}
+    Swipe Into View    ${locator_for_City}
+    Click Element    ${locator_for_City}
+
+Optionally, delay the update of the application
+    [Documentation]    If a New Version of the application is available, refuse the update by answering "Later"
+    ${update_dialog_present}=    Run Keyword And Return Status    Wait For Element    id=com.airfrance.android.dinamoprd:id/new_application_dialog_yes_button    30s    5s
+    Run Keyword If    ${update_dialog_present}    Click Element    id=com.airfrance.android.dinamoprd:id/new_application_dialog_later_button
+
+Optionally, close the cookie popup
+    [Documentation]    If the cookie dialog is shown, close it
+    ${cookie_dialog_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Run Keyword If    '${cookie_dialog_present}'=='True'    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+
+Optionally, close the Survey request
+    [Documentation]    If the Survey Request is shown, refuse to take the Survey
+    ${survey_dialog_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[@id='MetrixLab_overlay']
+    Run Keyword If    '${survey_dialog_present}'=='True'    Click Element    xpath=//*[@href='javascript:MetrixLab_CloseBanner();']

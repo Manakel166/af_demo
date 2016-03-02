@@ -1,0 +1,291 @@
+*** Settings ***
+Documentation     Provides the web test stations and the web automation library (selenium)
+Library           Selenium2Library
+
+*** Variables ***
+${Grid Server}    http://10.70.150.145:4441/wd/hub    #http://10.71.33.67:4441/wd/hub
+
+*** Keywords ***
+Open B2C PROD on Chrome 40 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:40
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Comment    Click Element    xpath=//a[@id='idCountryLanguageLink']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on Chrome 41 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:41
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Click Element    xpath=//a[@class='countrySelector']
+    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on Chrome 42 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:42
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Click Element    xpath=//a[@class='countrySelector']
+    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on Firefox 36 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Firefox
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    firefox    driver1    ${Grid Server}    desired_capabilities=platform:WINDOWS,version:36
+    Go To    https://www.airfrance.fr/
+    Comment    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Comment    Click Element    xpath=//a[@class='countrySelector']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on IE8 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    InternetExplorer
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    ie    driver1    ${Grid Server}    platform:WINDOWS,version:8
+    Go To    https://www.airfrance.fr/
+    Optionally, close the cookie popup
+    Click Element    xpath=//a[@class='countrySelector']
+    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on Safari on Desktop (MAC)
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    MacOS
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    Safari    driver1    ${Grid Server}    Plaftorm:MAC
+    Go To    https://www.airfrance.fr/
+    Optionally, close the cookie popup
+    Comment    Click Element    xpath=//a[@class='countrySelector']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open BMW PROD on Chrome 40 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:40
+    Go To    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Comment    Click Element    id=bmw-bloc-processes
+    Comment    Click Element    css=img.bmw-header-menu-icon
+    Comment    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Comment    Click Element    xpath=//select[@id='idMarketSelect']
+    Comment    Click Element    xpath=//option[contains(.,'France')]
+    Comment    Click Element    id=idValidateButton
+    Comment    Location Should Contain    marketSelect=FR&langSelect=fr
+
+Open BMW PROD on Firefox 36 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    FireFox
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    ff    driver1    ${Grid Server}    platform:WINDOWS,version:36
+    Go To    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    css=img.bmw-header-menu-icon
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Select From List    idLangSelect    fr
+    Click Element    id=idValidateButton
+
+Open BMW PROD on IE8 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    InternetExplorer
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    IE    driver1    ${Grid Server}    version:8
+    Go To    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    css=img.bmw-header-menu-icon
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    id=idValidateButton
+    Location Should Contain    marketSelect=FR&langSelect=fr
+
+Open BMW PROD on Safari on Desktop (MAC)
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    MacOs
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    MSE_GLORFINDEL_Yosemite
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    Safari    driver1    ${Grid Server}    Plaftorm:MAC
+    Go To    https://mobile.airfrance.fr/
+    Optionally, close the cookie popup
+    Click Element    id=bmw-bloc-processes
+    Click Element    css=img.bmw-header-menu-icon
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    id=idValidateButton
+
+Test
+    Get Location
+
+Open B2C PROD on Chrome 43 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:43
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Comment    Click Element    xpath=//a[@class='countrySelector']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//a[@id='idCountryLanguageLink'][contains(.,'France - FR')]    #market is France and language is \ FR
+
+Open B2C PROD on Chrome 45 on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    chrome    driver1    ${Grid Server}    platform:WINDOWS,version:45
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Comment    Click Element    xpath=//a[@class='countrySelector']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Comment    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on "${Browser}" version "${Version}" on Desktop
+    Set Test Variable    ${CHANNEL}    Web
+    Set Test Variable    ${OS}    Windows
+    Set Test Variable    ${STATION}    Desktop
+    Set Test Variable    ${BROWSER}    ${Browser}
+    Set Test Variable    ${BROWSER_VERSION}    ${Version}
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    AFR585504_Win7
+    Export Configuration Tags
+    Set Library Search Order    Selenium2Library    AppiumLibrary
+    Set Selenium Implicit Wait    30 seconds
+    Open Browser    http://www.google.com    ${Browser}    driver1    ${Grid Server}    platform:WINDOWS,version:${Version}    ff_profile_dir=../../40_TEST_BROWSERS/FF_PROFILE
+    Go To    https://www.airfrance.fr/
+    Click Element    xpath=//div[@id='tc_privacy_btn_close']/img
+    Comment    Click Element    xpath=//a[@id='idCountryLanguageLink']
+    Comment    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Comment    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Comment    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Comment    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR

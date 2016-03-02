@@ -1,0 +1,41 @@
+*** Keywords ***
+Check If Test Has Tag
+    [Arguments]    ${Tag}
+    ${tag_string}=    Set Variable    @{TEST_TAGS}
+    ${count}=    Get Count    ${tag_string}    ${Tag}
+    ${result}=    Set Variable If    ${count}>0    ${True}    ${False}
+    Log    ${result}
+    [Return]    ${result}
+
+Wait For Element
+    [Arguments]    ${locator}    ${timeout}=5s    ${check_interval}=1s
+    Log    ${timeout}
+    Log    ${check_interval}
+    Log     ${locator}
+    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Page Should Contain Element    ${locator}
+
+Wait For Location
+    [Arguments]    ${location}    ${timeout}=5s    ${check_interval}=1s
+    Log    ${timeout}
+    Log    ${check_interval}
+    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Location Should Contain    ${location}
+
+Wait For Location by Element
+    [Arguments]    ${locator}    ${timeout}=10s    ${check_interval}=1s
+    [Documentation]    Assert the current location by checking the presence of one element identified by ${locator}
+    ...    timeout can be configured.
+    ...    check interval can be configured.
+    Wait For Element    ${locator}    ${timeout}    ${check_interval}
+
+TMP_Switch_To_Native_App
+    Switch To Context    NATIVE_APP
+
+Export Configuration Tags
+    [Documentation]    Update the current Test Tags according to current Test Configuration
+    ...    like if CHANNEL='WEB', Test Tag 'Channel:Web' is set/confirmed
+    Set Tags    Channel:${CHANNEL}
+    Set Tags    OS:${OS}
+    Set Tags    Station:${STATION}
+    Set Tags    Browser:${BROWSER}
+    Set Tags    Appli:${APPLI}
+    Set Tags    DeviceName:${DEVICE_NAME}

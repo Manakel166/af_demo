@@ -1,0 +1,651 @@
+*** Settings ***
+Documentation     Provide the mobile test stations and the mobile automation library(Appium).
+Library           AppiumLibrary
+Library           OperatingSystem
+
+*** Variables ***
+${Grid Server}    http://10.70.150.145:4441/wd/hub    #
+${Working_on_Real_Device}    NO
+
+*** Keywords ***
+Close
+    Close All Applications
+
+Open B2C PROD on GRID Device via BMW
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D
+    ...    platform=ANDROID    args=--disable-translate
+    Go To Url    http://www.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    xpath=//a[@href='https://www.airfrance.com/FR/en/local/home/home/HomePageAction.do?fromMobile=true']    #Continue on Classic Site
+    Click Element    xpath=//a[@class='countrySelector']
+    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Location Should Contain    /FR/fr
+
+Open B2C PROD on GRID Device via BMW (Recovery Plan)
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D
+    ...    platform=ANDROID    args=--disable-translate
+    Go To Url    http://www.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    xpath=//a[@href='https://www.airfrance.com/FR/en/local/home/home/HomePageAction.do?fromMobile=true']    #Continue on Classic Site
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open B2C PROD on GRID Emulator IOS via BMW (Recovery Plan)
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPhone5_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    NO
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5    platform=MAC
+    Comment    Open Application    ${Grid Server}    dynamo    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s
+    ...    platform=MAC    browserName=Safari on Iphone5
+    Go To Url    http://www.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    xpath=//a[@href='https://www.airfrance.com/FR/en/local/home/home/HomePageAction.do?fromMobile=true']    #Continue on Classic Site
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+    Comment    Log    For Demonstration Purpose, let's zoom in and out using Pinch gesture
+    Comment    Pinch    xpath=//li[@class='langueactive'][contains(.,'FR')]
+
+Open B2C PROD on GRID IPAD2 Emulator
+    Set Test Variable    ${CHANNEL}    WEB
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPad2_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    NO
+    Open Application    ${Grid Server}    dynamo    platformName=iOS    platformVersion=8.2    deviceName=iPad 2    platform=MAC
+    ...    browserName=Safari on iPad2
+    Go To Url    http://www.airfrance.fr/
+    Optionally, close the cookie popup
+    Click Element    xpath=//a[@class='countrySelector']
+    Wait Until Keyword Succeeds    16s    2s    Click Element    xpath=//div[@class='selectblock']//div[.='France']
+    Wait Until Keyword Succeeds    16s    2s    Click Element    xpath=//div[@id='menufr']//a[.='France']
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open BMW PROD on GRID Device
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D
+    ...    platform=ANDROID    chromeOptions=${chrome_switches}
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Comment    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Wait Until Page Contains Element    xpath=//select[@id='idMarketSelect']    10s
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Comment    ${my_element}=    Find Elements    id=idValidateButton    False    False
+    Comment    Log    ${my_element}
+    Comment    Log    ${my_element.location['x']}
+    Comment    ${driver}=    Get Driver
+    Comment    Log    ${driver}
+    Click Element    id=idValidateButton
+    Comment    ${url}=    Get Web Location
+    Comment    Log    ${url}
+
+Open BMW PROD on GRID Device IOS
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPhone5_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=7.1.2    deviceName=iPhone 5s    browserName=iPhone5    platform=MAC
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Click Element    id=idValidateButton
+
+Open BMW PROD on GRID Emulator IOS
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPhone5_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    NO
+    Comment    Open Application    ${Grid Server}    --safari    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s
+    ...    browserName=iPhone5    platform=MAC
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5    platform=MAC
+    Go To Url    https://mobile.airfrance.fr/
+    Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Wait Until Keyword Succeeds    30s    2s    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Click Element    id=idValidateButton
+
+Open BMW PROD on GRID IPAD2 Emulator
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPad_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    NO
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPad 2    browserName=Safari on iPad2    platform=MAC
+    Go To Url    https://mobile.airfrance.fr/
+    Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Wait Until Keyword Succeeds    30s    2s    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Click Element    id=idValidateButton
+
+Open Dynamo PROD on GRID Device
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=5.1    deviceName=Xperia_SP    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=YT910MKC4D
+    ...    platform=ANDROID
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Dynamo PROD on GRID Emulator
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=5.1    deviceName=AVD_for_5_1_WGA    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=emulator-5554
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Comment    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Dynamo PROD on GRID Emulator IOS
+    Set Test Variable    ${CHANNEL}    iOSApp
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    Emulator
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    emulator_IPhone5_8.2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Open Application    ${Grid Server}    dynamo    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    app=/Users/dinb/Desktop/automation/20_AUT/DinamoDev.app
+    ...    platform=MAC    browserName=iPhone5
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    name=Allow
+    Click Element    name=Don’t Allow
+    Wait Until Keyword Succeeds    1min    5s    Page Should Contain Element    name=Modify
+    Click Element    name=Modify
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    name=Country and language
+    Click Element    name=settings_right_arrow.png
+    Comment    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//UIATableCell[@name='France']
+    Click Element    xpath=//UIATableCell[@name='France']
+    Click Element    name=Confirm
+    Comment    Click Element    name=settings_right_arrow.png
+    Comment    Click Element    xpath=//UIATableCell[@name='Français']
+    Comment    Click Element    name=Confirm
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    name=Valider
+    Click Element    name=Valider
+    Sleep    2s
+    Click Element    xpath=//UIAButton[@name='navigation left arrow']
+
+Open Dynamo PROD on Local VM Emulator
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Open Application    ${Local Appium Server}    platformName=Android    platformVersion=5.1    deviceName=AVD_for_5_1_WGA    app=C:/AUTOMATION/20_AUT/air_france_1.7.2_72.apk
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Comment    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Dynamo PROD on Remote Emulator
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Open Application    ${Remote Appium Server}    platformName=Android    platformVersion=5.1    deviceName=5_1_WVGA_x86    app=C:/Mobile_Automation/Apps/air_france_1.7.2_72.apk
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Comment    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Swipe Into View
+    [Arguments]    ${element}    ${dx}=0    ${dy}=-150    ${max_steps}=50    ${x}=100    ${y}=300
+    ...    ${duration}=500
+    ${initial_context}=    Get Current Context
+    Switch To Context    NATIVE_APP
+    : FOR    ${i}    IN RANGE    1    ${max_steps}
+    \    ${final_x} =    Evaluate    (int(${x})+int(${dx}))
+    \    ${final_y} =    Evaluate    (int(${y})+int(${dy}))
+    \    ${on_selendroid}=    Check If Test Has Tag    Selendroid
+    \    Run Keyword If    '${on_selendroid}'=='True'    SelenSwipe    ${x}    ${y}    ${final_x}
+    \    ...    ${final_y}    ${duration}
+    \    ...    ELSE    Swipe    ${x}    ${y}    ${final_x}
+    \    ...    ${final_y}    ${duration}
+    \    Comment    Swipe    ${x}    ${y}    ${final_x}    ${final_y}
+    \    ...    ${duration}
+    \    Switch To Context    ${initial_context}
+    \    ${element_found}    ${value} =    Run Keyword and Ignore Error    Page Should Contain Element    ${element}
+    \    Log    ${element_found}
+    \    Switch To Context    NATIVE_APP
+    \    Exit For Loop If    '${element_found}'=='PASS'
+    Switch To Context    ${initial_context}
+
+Open B2C PROD on Android Tablet
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    B2C
+    Set Test Variable    ${DEVICE_NAME}    Logicom_TAB962_4.1.1
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=TAB962    browserName=chrome    udid=EWYXGZ0486
+    ...    platform=ANDROID    args=--disable-translate
+    Go To Url    http://www.airfrance.fr/
+    Comment    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Comment    Click Element    xpath=//a[@href='https://www.airfrance.com/FR/en/local/home/home/HomePageAction.do?fromMobile=true']    #Continue on Classic Site
+    ${already_in_french}    Run Keyword And Return Status    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]
+    Run Keyword If    '${already_in_french}'=='False'    Click Element    xpath=//a[@href='/FR/fr/local/home/home/HomePageAction.do']
+    Optionally, close the Survey request
+    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
+    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+
+Open Dynamo PROD on Android Tablet
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Logicom_TAB962_4.1.1
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=4.1.1    deviceName=TAB962    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=EWYXGZ0486
+    ...    platform=ANDROID    automationName=Selendroid
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open BMW PROD on Android Tablet
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    Logicom_TAB962_4.1.1
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Comment    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=TAB962    browserName=chrome
+    ...    udid=EWYXGZ0486    platform=ANDROID    chromeOptions=${chrome_switches}
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=TAB962    browserName=chrome    udid=EWYXGZ0486
+    ...    platform=ANDROID
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Wait    10s
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    ${my_element}=    Find Elements    id=idValidateButton    False    False
+    Log    ${my_element}
+    Log    ${my_element.location['x']}
+    ${driver}=    Get Driver
+    Log    ${driver}
+    Click Element    id=idValidateButton
+
+Set Network To Data Only
+    Set Network Connection Status    4
+
+Set Network To AirPlane Mode
+    Set Network Connection Status    1
+
+Set Network To Wifi Only
+    Set Network Connection Status    2
+
+SelenSwipe
+    [Arguments]    ${x}    ${y}    ${final_x}    ${final_y}    ${duration}
+    [Documentation]    Swipe using direct adb command instead of appium, due to a bug in selendroid for android device below 17
+    ${output} =    Run    adb shell input swipe ${x} ${y} ${final_x} ${final_y}
+    Log    ${output}
+
+Open BMW PROD on GRID IPAD Mini Real Device
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    iOS
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Safari
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    device_IPadMini
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    NO
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPad 2    browserName=Safari on iPad2    platform=MAC
+    Go To Url    https://mobile.airfrance.fr/
+    Comment    Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Wait Until Keyword Succeeds    30s    2s    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Click Element    id=idValidateButton
+
+Open BMW PROD on Samsung Grand Christophe
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    Samsung_Grand_Christophe
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=4.2    deviceName=Samsung_Grand_Christophe    browserName=chrome    udid=42038ed15a5bb000
+    ...    platform=ANDROID
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Comment    Click Element    id=bmw-bloc-processes
+    Comment    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Comment    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Comment    Click Element    xpath=//select[@id='idMarketSelect']
+    Comment    Click Element    xpath=//option[contains(.,'France')]
+    Comment    Click Element    xpath=//select[@id='idLangSelect']
+    Comment    Click Element    xpath=//option[@value='fr']
+    Comment    ${my_element}=    Find Elements    id=idValidateButton    False    False
+    Comment    Log    ${my_element}
+    Comment    Log    ${my_element.location['x']}
+    Comment    ${driver}=    Get Driver
+    Comment    Log    ${driver}
+    Comment    Click Element    id=idValidateButton
+    Comment    ${url}=    Get Web Location
+    Comment    Log    ${url}
+
+Open BMW PROD on Samsung S2
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    Samsung_Grand_Christophe
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=16    deviceName=Samsung-I9100    browserName=chrome    udid=0019471f45953f
+    ...    platform=ANDROID
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    ${my_element}=    Find Elements    id=idValidateButton    False    False
+    Log    ${my_element}
+    Log    ${my_element.location['x']}
+    ${driver}=    Get Driver
+    Log    ${driver}
+    Click Element    id=idValidateButton
+    ${url}=    Get Web Location
+    Log    ${url}
+
+Open Dynamo PROD on GRID Samsung S2
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Samsung-I9100
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=16    deviceName=Samsung-I9100    app=./Apps/air_france_1.7.2_72.apk    udid=0019471f45953f
+    ...    platform=ANDROID
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Le Bon Coin on Samsung S2
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    LEBONCOIN
+    Set Test Variable    ${DEVICE_NAME}    Samsung-I9100
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=16    deviceName=Samsung-I9100    app=./Apps/leboncoin.apk    udid=0019471f45953f
+    ...    platform=ANDROID
+
+Open BMW PROD on Samsung Galaxy Note 2
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    SamsungNote2_GT-N700
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=15    deviceName=SamsungNote2_GT-N700    browserName=chrome    udid=00190d4770a71f
+    ...    platform=ANDROID    automationName=Selendroid
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    id=bmw-bloc-processes
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    ${my_element}=    Find Elements    id=idValidateButton    False    False
+    Log    ${my_element}
+    Log    ${my_element.location['x']}
+    ${driver}=    Get Driver
+    Log    ${driver}
+    Click Element    id=idValidateButton
+    ${url}=    Get Web Location
+    Log    ${url}
+
+Open Dynamo PROD on Samsung Galaxy Note 2 Android Device
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    SamsungNote2_GT-N700
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=15    deviceName=SamsungNote2_GT-N700    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=00190d4770a71f
+    ...    platform=ANDROID    automationName=Selendroid
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Dynamo PROD on Samsung Grand Device
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Sony_XSperia_SP2
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    platformName=Android    platformVersion=4.2    deviceName=Samsung_Grand_Christophe    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=42038ed15a5bb000
+    ...    platform=ANDROID
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']

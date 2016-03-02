@@ -1,0 +1,52 @@
+*** Settings ***
+Documentation     Mapping between the Rules (GWT) and the Steps/Workflows tasks (On HomePage, Select X)
+Resource          ../application/af.pages.txt
+
+*** Keywords ***
+GIVEN I am on AirFrance HomePage
+    I'm on "Main Page"
+
+WHEN I select « Actualité des vols »
+    From "Main Page", Select "Actualité des Vols"
+
+THEN the page « Actualité des vols » is displayed
+    I'm on "Actualité des Vols"
+
+AND I don't select any « Origine »
+    Log    "No Origin Selected"
+
+WHEN I select « Meilleures offres »
+    From "Main Page", Select "Meilleures Offres"
+
+THEN the list of available grouped destinations from Paris is displayed
+    On "Meilleures Offres", Check List of Continents is displayed
+    On "Meilleures Offres", Check Departure is "Paris"
+
+GIVEN the list of available grouped destinations
+    On "Meilleures Offres", Check List of Continents is displayed
+
+I select the area « EUROPE »
+    From "Meilleures Offres", Select the "Europe" Area
+
+THEN the list of available destinations from Paris is displayed
+    On "Europe" Area, Check List of Destinations is displayed
+    On "Europe Area", Check Departure is "Paris"
+
+GIVEN the list of available destinations from Paris
+    On "Europe" Area, Check List of Destinations is displayed
+    On "Europe Area", Check Departure is "Paris"
+
+I select the "${City}" town \ in the destination list
+    From "Europe" Area, Select the "${City}" Destination
+
+THEN the specific selection criteria are displayed for destination "${City}"
+    On "${City}" Destination, Check Departure is Paris
+    On "${City}" Destination, Check Destination is "${City}"
+    On "${City}" Destination, Check Flight Date Calendar is displayed
+    On "${City}" Destination, Check Passengers Selector is displayed
+
+Actualités des Vols is showing a departure date at Today
+    On "Actualité des Vols", Check the Displayed Date is Today Date
+
+GIVEN I come back to the Airfrance HomePage
+    From "Actualité des Vols", Go Back to "Main Page"
