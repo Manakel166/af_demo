@@ -2,29 +2,32 @@
 Resource          features/af.features.txt
 
 *** Test Cases ***
-Le Bon Coin _ Failed Search
-    [Tags]    Emulator    OS:Android    Browser:None    Appli:LeBonCoin    Channel:AndroidApp    Station:RealDevice
-    ...    DefaultChannel
-    [Setup]    Run Keywords    Open Le Bon Coin on Samsung S2
-    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=android:id/home
-    Click Element    id=android:id/home
-    Wait Until Keyword Succeeds    30s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='Offres']
-    Click Element    xpath=//android.widget.TextView[@text='Offres']
-    Wait Until Keyword Succeeds    30s    5s    Page Should Contain Element    id=fr.leboncoin:id/showcase_button
-    Click Element    id=fr.leboncoin:id/showcase_button
-    Click Element    id=fr.leboncoin:id/search_result_menu_advanced_search
-    Input Text    id=fr.leboncoin:id/keywordField    Losi
-    Input Text    id=fr.leboncoin:id/zipCodeField    31280
-    Click Element    id=fr.leboncoin:id/onlyTitleCheckbox
-    Click Element    id=fr.leboncoin:id/submitButton
-    Wait Until Keyword Succeeds    30s    5s    Page Should Contain Element    id=fr.leboncoin:id/errorTitleField
-    Page Should Contain Element    xpath=//android.widget.TextView[@text='Aucune annonce trouvée !']
-    [Teardown]    Close Application
-
 App on Android Device
     [Documentation]    Open Dynamo PROD on GRID Device
     [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
     [Setup]    Run Keywords    Open Dynamo PROD on GRID Device
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+App on Android Samsung S2
+    [Documentation]    Open Dynamo PROD on GRID Device
+    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
+    ...    Selendroid
+    [Setup]    Run Keywords    Open Dynamo PROD on GRID Samsung S2
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+App on Android Samsung Galaxy Note 2 Device
+    [Documentation]    Open Dynamo PROD on GRID Device
+    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
+    [Setup]    Run Keywords    Open Dynamo PROD on Samsung Galaxy Note 2 Android Device
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+App on Samsung Grand Christophe
+    [Documentation]    Open Dynamo PROD on GRID Device
+    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
+    [Setup]    Run Keywords    Open Dynamo PROD on Samsung Grand Device
     Navigate From Paris To Rome
     [Teardown]    Close
 
@@ -33,6 +36,14 @@ App on Android Tablet
     [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
     ...    Selendroid
     [Setup]    Run Keywords    Open Dynamo PROD on Android Tablet
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+App on Android Device (Restricted Network)
+    [Documentation]    Open Dynamo PROD on GRID Device with restricted connectivity
+    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
+    ...    NOT_USED
+    [Setup]    Run Keywords    Open Dynamo PROD on GRID Device    Set Network To Wifi Only
     Navigate From Paris To Rome
     [Teardown]    Close
 
@@ -62,28 +73,28 @@ Site Mobile on Android Tablet
 Site Mobile on Desktop Chrome 40
     [Documentation]    Open BMW PROD on Chrome 40 on Desktop
     [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:BMW
-    [Setup]    Run Keywords    Open BMW PROD on Chrome 40 on Desktop    Init UI for Web Mobile
+    [Setup]    Run Keywords    Open BMW PROD on "Chrome" version "40" on "Windows" platform
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Mobile on Desktop Firefox 36
     [Documentation]    Open BMW PROD on Firefox 36 on Desktop
-    [Tags]    OS:Windows    Appli:Dynamo    Channel:Web    Station:Desktop    Browser:Firefox
-    [Setup]    Run Keywords    Open BMW PROD on Firefox 36 on Desktop    Init UI for Web Mobile
+    [Tags]    OS:Windows    Channel:Web    Station:Desktop    Browser:Firefox    Appli:BMW
+    [Setup]    Run Keywords    Open BMW PROD on "Firefox" version "36" on "Windows" platform
     Navigate From Paris To Rome
     [Teardown]    Close
 
-Site Mobile on Desktop IE 8
-    [Documentation]    Open BMW PROD on IE8 on Desktop
-    [Tags]    OS:Windows    Appli:Dynamo    Channel:Web    Station:Desktop    Browser:Internet Explorer
-    [Setup]    Run Keywords    Open BMW PROD on IE8 on Desktop    Init UI for Web Mobile
+Site Mobile on Desktop IE 11
+    [Documentation]    Open BMW PROD on IE11 on Desktop
+    [Tags]    OS:Windows    Channel:Web    Station:Desktop    Browser:Internet Explorer    Appli:BMW
+    [Setup]    Run Keywords    Open BMW PROD on "IE" version "11" on "Windows" platform
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Mobile on Desktop Safari
     [Documentation]    Open BMW PROD on Safari on Desktop (MAC)
-    [Tags]    Appli:Dynamo    Channel:Web    Station:Desktop    OS:MacOs    Browser:Safari
-    [Setup]    Run Keywords    Open BMW PROD on Safari on Desktop (MAC)    Init UI for Web Mobile
+    [Tags]    Channel:Web    Station:Desktop    OS:MacOs    Browser:Safari    Appli:BMW
+    [Setup]    Run Keywords    Open BMW PROD on "Safari" version "" on "MAC" platform
     Navigate From Paris To Rome
     [Teardown]    Close
 
@@ -108,52 +119,109 @@ Site Mobile on IOS Device
     Navigate From Paris To Rome
     [Teardown]    Close
 
+Site Mobile on Android Device (WebView)(Experimental)
+    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    NOT_USED
+    [Setup]    Run Keywords    Open BMW PROD on GRID Device    TMP_Switch_To_Native_App    Init UI for Web Mobile (WebView)
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Mobile on IPad Mini Real Device (Durin)
+    [Documentation]    Open BMW PROD on GRID Ipad 2 Emulator (iOS)
+    [Tags]    Appli:BMW    Channel:WebMobile    OS:iOS    Browser:Safari    Station:Emulator
+    [Setup]    Run Keywords    Open BMW PROD on GRID IPAD Mini Real Device    Init UI for Web Mobile
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Mobile on Samsung Grand Christophe
+    [Documentation]    Open BMW PROD on GRID Device
+    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
+    ...    Current    Selendroid
+    [Setup]    Run Keywords    Open BMW PROD on Samsung Grand Christophe    Init UI for Web Mobile
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Mobile on Samsung S2
+    [Documentation]    Open BMW PROD on GRID Device
+    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
+    ...    Current    Selendroid
+    [Setup]    Run Keywords    Open BMW PROD on Samsung S2    Init UI for Web Mobile
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Mobile on Samsung Galaxy Note 2
+    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
+    ...    Current    Selendroid
+    [Setup]    Run Keywords    Open BMW PROD on Samsung Galaxy Note 2    Init UI for Web Mobile
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
 Site Web on Desktop Chrome 40
     [Documentation]    Open B2C PROD on Chrome 40 on Desktop
     [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "40" on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "40" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop Chrome 41
     [Documentation]    Open B2C PROD on Chrome 41 on Desktop
     [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "41" on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "41" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop Chrome 42
     [Documentation]    Open B2C PROD on Chrome 42 on Desktop
     [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on Chrome 42 on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "42" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop Chrome 43
     [Documentation]    Open B2C PROD on Chrome 43 on Desktop
     [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on Chrome 43 on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "43" on "Windows" platform    Init UI for Web
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Web on Desktop Chrome 45
+    [Documentation]    Open B2C PROD on Chrome 45 on Desktop
+    [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "45" on "Windows" platform    Init UI for Web
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Web on Desktop Chrome 48
+    [Documentation]    Open B2C PROD on Chrome 45 on Desktop
+    [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "48" on "Windows" platform    Init UI for Web
+    Navigate From Paris To Rome
+    [Teardown]    Close
+
+Site Web on Desktop Firefox 44
+    [Documentation]    Open B2C PROD on Firefox 44 on Desktop
+    [Tags]    OS:Windows    Channel:Web    Station:Desktop    Appli:B2C    Browser:FireFox    DefaultChannel
+    [Setup]    Run Keywords    Open B2C PROD on "Firefox" version "44" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop Firefox 36
     [Documentation]    Open B2C PROD on Firefox 36 on Desktop
     [Tags]    OS:Windows    Channel:Web    Station:Desktop    Appli:B2C    Browser:FireFox    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on "Firefox" version "36" on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Firefox" version "36" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop IE11
-    [Documentation]    Open B2C PROD on IE8 on Desktop
+    [Documentation]    Open B2C PROD on IE11 on Desktop
     [Tags]    Channel:Web    Station:Desktop    Appli:B2C    Browser:Internet Explorer    OS:Windows
-    [Setup]    Run Keywords    Open B2C PROD on "IE" version "11" on Desktop    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "InternetExplorer" version "11" on "Windows" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
 Site Web on Desktop Safari
     [Documentation]    Open B2C PROD on Safari on Desktop (MAC)
     [Tags]    Channel:Web    Station:Desktop    Appli:B2C    Browser:Safari    OS:MacOs    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on Safari on Desktop (MAC)    Init UI for Web
+    [Setup]    Run Keywords    Open B2C PROD on "Safari" version "" on "MAC" platform    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 
@@ -184,86 +252,6 @@ Site Web on IOS Emulator(Via Mobile Site Link - Recovery)
 Site Web on Ipad2 Emulator
     [Tags]    OS:Android    Browser:Chrome    Station:RealDevice    Appli:B2C    Channel:WebMobile
     [Setup]    Run Keywords    Open B2C PROD on GRID IPAD2 Emulator    Init UI for Web
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Mobile on Android Device (WebView)(Experimental)
-    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    NOT_USED
-    [Setup]    Run Keywords    Open BMW PROD on GRID Device    TMP_Switch_To_Native_App    Init UI for Web Mobile (WebView)
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-App on Android Device (Restricted Network)
-    [Documentation]    Open Dynamo PROD on GRID Device with restricted connectivity
-    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
-    ...    NOT_USED
-    [Setup]    Run Keywords    Open Dynamo PROD on GRID Device    Set Network To Wifi Only
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Mobile on IPad Mini Real Device (Durin)
-    [Documentation]    Open BMW PROD on GRID Ipad 2 Emulator (iOS)
-    [Tags]    Appli:BMW    Channel:WebMobile    OS:iOS    Browser:Safari    Station:Emulator
-    [Setup]    Run Keywords    Open BMW PROD on GRID IPAD Mini Real Device    Init UI for Web Mobile
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Mobile on Samsung Grand Christophe
-    [Documentation]    Open BMW PROD on GRID Device
-    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
-    ...    Current    Selendroid
-    [Setup]    Run Keywords    Open BMW PROD on Samsung Grand Christophe    Init UI for Web Mobile
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Mobile on Samsung S2
-    [Documentation]    Open BMW PROD on GRID Device
-    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
-    ...    Current    Selendroid
-    [Setup]    Run Keywords    Open BMW PROD on Samsung S2    Init UI for Web Mobile
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-App on Android Samsung S2
-    [Documentation]    Open Dynamo PROD on GRID Device
-    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
-    ...    Selendroid
-    [Setup]    Run Keywords    Open Dynamo PROD on GRID Samsung S2
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Mobile on Samsung Galaxy Note 2
-    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
-    ...    Current    Selendroid
-    [Setup]    Run Keywords    Open BMW PROD on Samsung Galaxy Note 2    Init UI for Web Mobile
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Web on Desktop Chrome 45
-    [Documentation]    Open B2C PROD on Chrome 45 on Desktop
-    [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "45" on Desktop    Init UI for Web
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-App on Android Samsung Galaxy Note 2 Device
-    [Documentation]    Open Dynamo PROD on GRID Device
-    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
-    [Setup]    Run Keywords    Open Dynamo PROD on Samsung Galaxy Note 2 Android Device
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-App on Samsung Grand Christophe
-    [Documentation]    Open Dynamo PROD on GRID Device
-    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
-    [Setup]    Run Keywords    Open Dynamo PROD on Samsung Grand Device
-    Navigate From Paris To Rome
-    [Teardown]    Close
-
-Site Web on Desktop Firefox 44
-    [Documentation]    Open B2C PROD on Firefox 44 on Desktop
-    [Tags]    OS:Windows    Channel:Web    Station:Desktop    Appli:B2C    Browser:FireFox    DefaultChannel
-    [Setup]    Run Keywords    Open B2C PROD on "Firefox" version "44" on Desktop    Init UI for Web
     Navigate From Paris To Rome
     [Teardown]    Close
 

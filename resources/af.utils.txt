@@ -11,8 +11,8 @@ Wait For Element
     [Arguments]    ${locator}    ${timeout}=5s    ${check_interval}=1s
     Log    ${timeout}
     Log    ${check_interval}
-    Log     ${locator}
-    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Page Should Contain Element    ${locator}
+    Log    ${locator}
+    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Page Should Contain Element     ${locator}
 
 Wait For Location
     [Arguments]    ${location}    ${timeout}=5s    ${check_interval}=1s

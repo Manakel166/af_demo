@@ -10,7 +10,7 @@ Go Back One Page
     ...    IOS: Back Arrow (whatever the channel)
     ...    else "Back Button"
     ${is_on_iOS}=    Check If Test Has Tag    OS:iOS
-    ${is_on_MacOS}=    Check If Test Has Tag    OS:MacOs
+    ${is_on_MacOS}=    Check If Test Has Tag    OS:MAC
     ${is_on_B2C}=    Check If Test Has Tag    Appli:B2C
     Run Keyword If    '${is_on_iOS}'=='False' and '${is_on_MacOS}'=='False' and '${is_on_B2C}'=='False'    Go Back
     ...    ELSE    Go Back Using Page Back Arrow
@@ -23,8 +23,9 @@ Swipe Vertically to "Europe" Area
     Click Element    ${Tile_Europe}
 
 Swipe Horizontally to "Europe" Area
-    ${slider}=    Find Elements    ${continents_slider}    True    True
-    ${slider_y}=    Set Variable    ${slider.location['y']}
+    ${slider_y}=    Set Variable    495
+    ${slider}=    Find Elements    ${continents_slider}    ${True}    ${False}
+    Run Keyword Unless    "${slider}"=="None"    ${slider_y}=    Set Variable    ${slider.location['y']}
     Log    ${slider_y}
     ${better_slider_y}=    Set Variable If    ${slider_y}<0    495    ${slider_y}
     Swipe Into View    ${Tile_Europe}    100    0    y=${better_slider_y}
@@ -51,10 +52,10 @@ Optionally, delay the update of the application
 
 Optionally, close the cookie popup
     [Documentation]    If the cookie dialog is shown, close it
-    ${cookie_dialog_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
-    Run Keyword If    '${cookie_dialog_present}'=='True'    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    ${cookie_dialog_present}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button_close_privacy_popup}    10s
+    Run Keyword If    '${cookie_dialog_present}'=='True'    Click Element    ${button_close_privacy_popup}
 
 Optionally, close the Survey request
     [Documentation]    If the Survey Request is shown, refuse to take the Survey
-    ${survey_dialog_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[@id='MetrixLab_overlay']
+    ${survey_dialog_present}=    Run Keyword And Return Status    Wait for Element    xpath=//*[@id='MetrixLab_overlay']    10s    1s
     Run Keyword If    '${survey_dialog_present}'=='True'    Click Element    xpath=//*[@href='javascript:MetrixLab_CloseBanner();']

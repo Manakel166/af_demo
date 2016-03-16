@@ -31,6 +31,7 @@ ${ui_Flight_Day_On_Actualité_des_Vols}    xpath=//div[@class='day font-size-xxl
 ${ui_Flight_Month_On_Actualité_des_Vols}    xpath=//div[@class='month font-size-l'][contains(.,'Month')]    #Template value to be updated
 ${continents_slider}    NOT DEFINED    # Slider for Continents List
 ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    ONLY FOR B2C    # Meilleurs Offres selected on Homepage menu (eg with red highlight)
+${button_close_privacy_popup}    Not Defined for Mobile Apps
 
 *** Keywords ***
 Init UI for Web Mobile
@@ -52,6 +53,7 @@ Init UI for Web Mobile
     Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//div[@class='promos']
     Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//img[@class='bmw-header-title-arrow-back' ]    #xpath=//a[@class='bmw-btn-arrow-back']
     Set Test Variable    ${continents_slider}    xpath=//div[@class='hScrollerNav']
+    Set Test Variable    ${button_close_privacy_popup}    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
 
 Init UI for IOS
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Bienvenue
@@ -89,10 +91,11 @@ Init UI for Web
     Set Test Variable    ${Tile_Europe_selected_on_Europe_Area}    //ul[@class='Prune']//a[.='Europe']
     Set Test Variable    ${List_of_Continents_on_Meilleurs_Offres}    xpath=//*[@id="AllPromosBlock"]
     Set Test Variable    ${List_of_Destinations_on_Europe_Area}    xpath=//*[@id="blocContent"]
-    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    id=idNavHomeLink
+    Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//a[@id='idlogoAF']
     Set Test Variable    ${B2C_Voir_Nos_Meilleures_Offres}    xpath=//a[@id='idValidateButtonPromosDynamique']/span/span
     Set Test Variable    ${continents_slider}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
     Set Test Variable    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    xpath=//div[@id='bg_menu_img1'][@class='bg_menu_img bg_color_red']
+    Set Test Variable    ${button_close_privacy_popup}    xpath=//div[@id='tc_privacy']//div[@id='tc_privacy_btn_close']
 
 Init UI for Web Mobile (WebView)
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Air France - Réservation de Billet d'avion, Vol pas cher

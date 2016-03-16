@@ -2,10 +2,16 @@
 Documentation     Provide the mobile test stations and the mobile automation library(Appium).
 Library           AppiumLibrary
 Library           OperatingSystem
+Library           AppiumExtension.py
 
 *** Variables ***
 ${Grid Server}    http://10.70.150.145:4441/wd/hub    #
 ${Working_on_Real_Device}    NO
+&{Chrome_on_Xperia_SP2}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D    platform=ANDROID
+&{Xperia_SP2}     platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    udid=YT910MKC4D    platform=ANDROID
+&{Chrome_on_Mobile}    browserName=chrome
+&{Dynamo_on_Android}    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk
+&{Safari_on_Iphone_5s_82_Emulator}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5    platform=MAC
 
 *** Keywords ***
 Close
@@ -112,8 +118,9 @@ Open BMW PROD on GRID Device
     Set Library Search Order    AppiumLibrary    Selenium2Library
     Set Test Variable    ${Working_on_Real_Device}    YES
     ${chrome_switches} =    Create List    disable-translate
-    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D
-    ...    platform=ANDROID    chromeOptions=${chrome_switches}
+    Comment    Open Application    ${Grid Server}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome
+    ...    udid=YT910MKC4D    platform=ANDROID    chromeOptions=${chrome_switches}
+    Open Application    ${Grid Server}    &{Xperia_SP2}    &{Chrome_on_Mobile}
     Go To Url    https://mobile.airfrance.fr/
     Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
     Comment    Click Element    id=bmw-bloc-processes
@@ -167,7 +174,9 @@ Open BMW PROD on GRID Emulator IOS
     Set Test Variable    ${Working_on_Real_Device}    NO
     Comment    Open Application    ${Grid Server}    --safari    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s
     ...    browserName=iPhone5    platform=MAC
-    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5    platform=MAC
+    Comment    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5
+    ...    platform=MAC
+    Open Application    ${Grid Server}    &{Safari_on_Iphone_5s_82_Emulator}
     Go To Url    https://mobile.airfrance.fr/
     Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
     Click Element    id=bmw-bloc-processes
@@ -213,8 +222,9 @@ Open Dynamo PROD on GRID Device
     Export Configuration Tags
     Set Library Search Order    AppiumLibrary    Selenium2Library
     Set Test Variable    ${Working_on_Real_Device}    YES
-    Open Application    ${Grid Server}    platformName=Android    platformVersion=5.1    deviceName=Xperia_SP    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk    udid=YT910MKC4D
-    ...    platform=ANDROID
+    Comment    Open Application    ${Grid Server}    platformName=Android    platformVersion=5.1    deviceName=Xperia_SP    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk
+    ...    udid=YT910MKC4D    platform=ANDROID
+    Open Application    ${Grid Server}    &{Xperia_SP2}    &{Dynamo_on_Android}
     Optionally, delay the update of the application
     Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
     Go Back
