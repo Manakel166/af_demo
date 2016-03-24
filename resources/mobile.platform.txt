@@ -456,7 +456,7 @@ Open BMW PROD on GRID IPAD Mini Real Device
     Set Test Variable    ${DEVICE_NAME}    device_IPadMini
     Export Configuration Tags
     Set Library Search Order    AppiumLibrary    Selenium2Library
-    Set Test Variable    ${Working_on_Real_Device}    NO
+    Set Test Variable    ${Working_on_Real_Device}    YES
     Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPad 2    browserName=Safari on iPad2    platform=MAC
     Go To Url    https://mobile.airfrance.fr/
     Comment    Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
