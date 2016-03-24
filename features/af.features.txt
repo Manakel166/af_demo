@@ -18,7 +18,7 @@ Navigate From Paris To Rome
     WHEN I select the area « EUROPE »
     THEN the list of available destinations from Paris is displayed
     GIVEN the list of available destinations from Paris
-    I select the "Rome" town \ in the destination list
+    AND I select the "Rome" town \ in the destination list
     THEN the specific selection criteria are displayed for destination "Rome"
 
 Check Today Flights
