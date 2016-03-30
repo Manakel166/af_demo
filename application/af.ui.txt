@@ -32,6 +32,7 @@ ${ui_Flight_Month_On_Actualité_des_Vols}    xpath=//div[@class='month font-size
 ${continents_slider}    NOT DEFINED    # Slider for Continents List
 ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    ONLY FOR B2C    # Meilleurs Offres selected on Homepage menu (eg with red highlight)
 ${button_close_privacy_popup}    Not Defined for Mobile Apps
+${Price_on_Destination_Page}    xpath=//android.widget.TextView[@text='PRICE'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_3_cell_area_pricel']
 
 *** Keywords ***
 Init UI for Web Mobile
@@ -54,6 +55,7 @@ Init UI for Web Mobile
     Set Test Variable    ${IOS_Back_Arrow_on_Any_Page}    xpath=//img[@class='bmw-header-title-arrow-back' ]    #xpath=//a[@class='bmw-btn-arrow-back']
     Set Test Variable    ${continents_slider}    xpath=//div[@class='hScrollerNav']
     Set Test Variable    ${button_close_privacy_popup}    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Set Test Variable    ${Price_on_Destination_Page}    xpath=//a[@id='lien_tarif'][contains(.,'PRICE')]
 
 Init UI for IOS
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Bienvenue
@@ -96,6 +98,7 @@ Init UI for Web
     Set Test Variable    ${continents_slider}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
     Set Test Variable    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    xpath=//div[@id='bg_menu_img1'][@class='bg_menu_img bg_color_red']
     Set Test Variable    ${button_close_privacy_popup}    xpath=//div[@id='tc_privacy']//div[@id='tc_privacy_btn_close']
+    Set Test Variable    ${Price_on_Destination_Page}    xpath=//span[@class='prixParPersonne']//b[contains(.,'PRICE')]
 
 Init UI for Web Mobile (WebView)
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Air France - Réservation de Billet d'avion, Vol pas cher

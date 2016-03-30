@@ -44,6 +44,7 @@ THEN the specific selection criteria are displayed for destination "${City}"
     On "${City}" Destination, Check Destination is "${City}"
     On "${City}" Destination, Check Flight Date Calendar is displayed
     On "${City}" Destination, Check Passengers Selector is displayed
+    On "${City}" Destination, Check Price is "50 €"
 
 Actualités des Vols is showing a departure date at Today
     On "Actualité des Vols", Check the Displayed Date is Today Date

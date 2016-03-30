@@ -4,7 +4,7 @@ Resource          features/af.features.txt
 *** Test Cases ***
 Check Today Flights on Mobile Site on Android Device
     [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:Device
-    [Setup]    Run Keywords    Open BMW PROD on GRID Device    Init UI for Web Mobile
+    [Setup]    Run Keywords    Open BMW PROD on Android Connect 504    Init UI for Web Mobile
     Check Today Flights
     [Teardown]    Close
 
@@ -16,7 +16,7 @@ Navigate from Paris to Venise on Mobile Site on Desktop Chrome 40
 
 Navigate from Paris to Venise on Mobile Site on Android Device
     [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
-    [Setup]    Run Keywords    Open BMW PROD on Samsung Grand Christophe    Init UI for Web Mobile
+    [Setup]    Run Keywords    Open BMW PROD on Android Connect 504    Init UI for Web Mobile
     Navigate From Paris To Venise    1
     [Teardown]    Close
 

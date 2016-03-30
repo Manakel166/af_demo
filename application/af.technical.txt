@@ -52,10 +52,10 @@ Optionally, delay the update of the application
 
 Optionally, close the cookie popup
     [Documentation]    If the cookie dialog is shown, close it
-    ${cookie_dialog_present}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button_close_privacy_popup}    10s
+    ${cookie_dialog_present}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button_close_privacy_popup}    5s
     Run Keyword If    '${cookie_dialog_present}'=='True'    Click Element    ${button_close_privacy_popup}
 
 Optionally, close the Survey request
     [Documentation]    If the Survey Request is shown, refuse to take the Survey
-    ${survey_dialog_present}=    Run Keyword And Return Status    Wait for Element    xpath=//*[@id='MetrixLab_overlay']    10s    1s
+    ${survey_dialog_present}=    Run Keyword And Return Status    Wait for Element    xpath=//*[@id='MetrixLab_overlay']    4s    1s
     Run Keyword If    '${survey_dialog_present}'=='True'    Click Element    xpath=//*[@href='javascript:MetrixLab_CloseBanner();']

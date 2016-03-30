@@ -12,7 +12,7 @@ Wait For Element
     Log    ${timeout}
     Log    ${check_interval}
     Log    ${locator}
-    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Page Should Contain Element     ${locator}
+    Wait Until Keyword Succeeds    ${timeout}    ${check_interval}    Page Should Contain Element    ${locator}
 
 Wait For Location
     [Arguments]    ${location}    ${timeout}=5s    ${check_interval}=1s
@@ -26,9 +26,6 @@ Wait For Location by Element
     ...    timeout can be configured.
     ...    check interval can be configured.
     Wait For Element    ${locator}    ${timeout}    ${check_interval}
-
-TMP_Switch_To_Native_App
-    Switch To Context    NATIVE_APP
 
 Export Configuration Tags
     [Documentation]    Update the current Test Tags according to current Test Configuration

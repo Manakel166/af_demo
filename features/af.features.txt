@@ -25,7 +25,7 @@ Check Today Flights
     GIVEN I am on AirFrance HomePage
     WHEN I select « Actualité des vols »
     THEN the page « Actualité des vols » is displayed
-    AND \ Actualités des Vols is showing a departure date at Today
+    AND Actualités des Vols is showing a departure date at Today
 
 Navigate From Paris To Venise
     [Arguments]    ${arg1}
