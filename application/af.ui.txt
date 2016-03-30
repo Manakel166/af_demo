@@ -76,12 +76,12 @@ Init UI for IOS
 
 Init UI for Web
     Set Test Variable    ${Bienvenue_on_Homepage}    xpath=//a[@class='header__logoAF withPicto']
-    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    xpath=//img[@src='/FR/common/common/img/pictos/horaire.svg']
+    Set Test Variable    ${Actualité_des_Vols_on_Homepage}    xpath=//img[contains(@src,'/common/img/pictos/horaire.svg')]
     Set Test Variable    ${Actualité_des_Vols_on_Title_Bar}    xpath=//h1[contains(.,'Actualité des vols')]
-    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//img[@src='/FR/common/common/img/pictos/promotion.svg']
+    Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//img[contains(@src,'/common/img/pictos/promotion.svg')]
     Set Test Variable    ${Au_Depart_de_Paris}    xpath=//select[@id='idDepartureStopover'][contains(.,'Paris PAR')]
     Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
-    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//h1[@class='titrePromoBlue'][contains(.,'Nos meilleures offres')]
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//h1[@class='titrePromoBlue'][contains(.,'Nos promotions')]
     Set Test Variable    ${Tile_Europe}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
     Set Test Variable    ${ui_Entry_Rome}    xpath=//div[@id='blocContent']//a[.='Rome']
     Set Test Variable    ${Départ_Paris_PAR}    xpath=//p[contains(.,'Paris -')]

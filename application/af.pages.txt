@@ -32,6 +32,7 @@ From "Main Page", Select "Meilleures Offres"
     I'm on "Main Page"
     ${is_on_B2C}=    Check If Test Has Tag    Appli:B2C
     Comment    Run Keyword If    '${is_on_B2C}'=='True'    Sleep    10s
+    Wait For Element    ${Meilleures_Offres_on_Homepage}    60s
     Click Element    ${Meilleures_Offres_on_Homepage}
     Comment    Run Keyword If    '${is_on_B2C}'=='True'    Wait Until Keyword Succeeds    30s    3s    Page Should Contain Element
     ...    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}
@@ -42,19 +43,15 @@ From "Main Page", Select "Meilleures Offres"
 
 From "Meilleures Offres", Select the "Europe" Area
     I'm on "Meilleures Offres"
-    Comment    ${is_on_WebMobile}=    Check If Test Has Tag    Channel:WebMobile
-    Comment    ${is_on_Web}=    Check If Test Has Tag    Channel:Web
-    Comment    ${is_on_RealDevice}=    Check If Test Has Tag    Station:RealDevice
-    Comment    Run Keyword If    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
-    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
-    ...    ELSE IF    '${is_on_RealDevice}'=='True'    Swipe Vertically to "Europe" Area
-    Comment    Run Keyword If    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
-    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
-    ...    ELSE    Swipe Vertically to "Europe" Area
-    Comment    Run Keyword If    '${is_on_RealDevice}'=='True'    Swipe Vertically to "Europe" Area
-    ...    ELSE IF    '${is_on_WebMobile}'=='True'    Swipe Horizontally to "Europe" Area
-    ...    ELSE IF    '${is_on_Web}'=='True'    Web Scroll to "Europe" Area
-    Run Keyword If    '${STATION}'=='RealDevice'    Swipe Vertically to "Europe" Area
+    Comment    Run Keyword If    '${STATION}'=='RealDevice'    Swipe Vertically to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Emulator' and '${APPLI}'=='B2C'    Swipe Vertically to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Emulator'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='Desktop'    Web Scroll to "Europe" Area
+    Log    '${STATION}'
+    Log    '${OS}'
+    Log    '${APPLI}''
+    Run Keyword If    '${STATION}'=='RealDevice' and '${OS}'=='iOS' and '${APPLI}'=='BMW'    Swipe Horizontally to "Europe" Area
+    ...    ELSE IF    '${STATION}'=='RealDevice'    Swipe Vertically to "Europe" Area
     ...    ELSE IF    '${STATION}'=='Emulator' and '${APPLI}'=='B2C'    Swipe Vertically to "Europe" Area
     ...    ELSE IF    '${STATION}'=='Emulator'    Swipe Horizontally to "Europe" Area
     ...    ELSE IF    '${STATION}'=='Desktop'    Web Scroll to "Europe" Area

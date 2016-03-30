@@ -5,18 +5,16 @@ Library           OperatingSystem
 Library           AppiumExtension.py
 
 *** Variables ***
-${Grid Server}    http://10.70.150.145:4441/wd/hub    #
+${Grid Server}    http://127.0.0.1:4441/wd/hub    #
 ${Working_on_Real_Device}    NO
 &{Chrome_on_Xperia_SP2}    platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    browserName=chrome    udid=YT910MKC4D    platform=ANDROID
 &{Xperia_SP2}     platformName=ANDROID    platformVersion=5.1    deviceName=Xperia_SP    udid=YT910MKC4D    platform=ANDROID
+&{Connect504}     platformName=ANDROID    platformVersion=5.1    deviceName=Connect504    udid=CIAINF7HUOI7Y9S4    platform=ANDROID
 &{Chrome_on_Mobile}    browserName=chrome
 &{Dynamo_on_Android}    app=C:/temp/MISSION_WG/08_RF_MOBILE/20_AUT/air_france_1.7.2_72.apk
 &{Safari_on_Iphone_5s_82_Emulator}    platformName=iOS    platformVersion=8.2    deviceName=iPhone 5s    browserName=Safari on iPhone5    platform=MAC
 
 *** Keywords ***
-Close
-    Close All Applications
-
 Open B2C PROD on GRID Device via BMW
     Set Test Variable    ${CHANNEL}    WebMobile
     Set Test Variable    ${OS}    Android
@@ -329,28 +327,6 @@ Open Dynamo PROD on Remote Emulator
     Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
     Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
 
-Swipe Into View
-    [Arguments]    ${element}    ${dx}=0    ${dy}=-150    ${max_steps}=50    ${x}=100    ${y}=300
-    ...    ${duration}=500
-    ${initial_context}=    Get Current Context
-    Switch To Context    NATIVE_APP
-    : FOR    ${i}    IN RANGE    1    ${max_steps}
-    \    ${final_x} =    Evaluate    (int(${x})+int(${dx}))
-    \    ${final_y} =    Evaluate    (int(${y})+int(${dy}))
-    \    ${on_selendroid}=    Check If Test Has Tag    Selendroid
-    \    Run Keyword If    '${on_selendroid}'=='True'    SelenSwipe    ${x}    ${y}    ${final_x}
-    \    ...    ${final_y}    ${duration}
-    \    ...    ELSE    Swipe    ${x}    ${y}    ${final_x}
-    \    ...    ${final_y}    ${duration}
-    \    Comment    Swipe    ${x}    ${y}    ${final_x}    ${final_y}
-    \    ...    ${duration}
-    \    Switch To Context    ${initial_context}
-    \    ${element_found}    ${value} =    Run Keyword and Ignore Error    Page Should Contain Element    ${element}
-    \    Log    ${element_found}
-    \    Switch To Context    NATIVE_APP
-    \    Exit For Loop If    '${element_found}'=='PASS'
-    Switch To Context    ${initial_context}
-
 Open B2C PROD on Android Tablet
     Set Test Variable    ${CHANNEL}    WebMobile
     Set Test Variable    ${OS}    Android
@@ -432,21 +408,6 @@ Open BMW PROD on Android Tablet
     Log    ${driver}
     Click Element    id=idValidateButton
 
-Set Network To Data Only
-    Set Network Connection Status    4
-
-Set Network To AirPlane Mode
-    Set Network Connection Status    1
-
-Set Network To Wifi Only
-    Set Network Connection Status    2
-
-SelenSwipe
-    [Arguments]    ${x}    ${y}    ${final_x}    ${final_y}    ${duration}
-    [Documentation]    Swipe using direct adb command instead of appium, due to a bug in selendroid for android device below 17
-    ${output} =    Run    adb shell input swipe ${x} ${y} ${final_x} ${final_y}
-    Log    ${output}
-
 Open BMW PROD on GRID IPAD Mini Real Device
     Set Test Variable    ${CHANNEL}    WebMobile
     Set Test Variable    ${OS}    iOS
@@ -457,7 +418,7 @@ Open BMW PROD on GRID IPAD Mini Real Device
     Export Configuration Tags
     Set Library Search Order    AppiumLibrary    Selenium2Library
     Set Test Variable    ${Working_on_Real_Device}    YES
-    Open Application    ${Grid Server}    platformName=iOS    platformVersion=8.2    deviceName=iPad 2    browserName=Safari on iPad2    platform=MAC
+    Open Application    ${Grid Server}    platformName=iOS    platformVersion=9.0    deviceName=iPad 2    browserName=Safari on iPad2    platform=MAC
     Go To Url    https://mobile.airfrance.fr/
     Comment    Wait Until Keyword Succeeds    10    1s    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
     Click Element    id=bmw-bloc-processes
@@ -659,3 +620,96 @@ Open Dynamo PROD on Samsung Grand Device
     Click Element    id=com.airfrance.android.dinamoprd:id/ok
     Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
     Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open Dynamo PROD on Android_Connect504
+    Set Test Variable    ${CHANNEL}    AndroidApp
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    None
+    Set Test Variable    ${APPLI}    DYNAMO
+    Set Test Variable    ${DEVICE_NAME}    Boulanger_Connect504
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    Open Application    ${Grid Server}    &{Connect504}    &{Dynamo_on_Android}
+    Optionally, delay the update of the application
+    Wait Until Keyword Succeeds    3min    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/info_card_tagline
+    Go Back
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Click Element    id=com.airfrance.android.dinamoprd:id/dialog_confirm_no_button
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Click Element    id=com.airfrance.android.dinamoprd:id/arrow_right
+    Input Text    id=com.airfrance.android.dinamoprd:id/filter_textedit    France
+    Comment    Scroll    xpath=//android.widget.TextView[@text='Canada']    xpath=//android.widget.TextView[@text='Argentina']
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.TextView[@text='France']
+    Click Element    xpath=//android.widget.TextView[@text='France']
+    Go Back
+    Click Element    id=com.airfrance.android.dinamoprd:id/ok
+    Wait Until Keyword Succeeds    15s    5s    Page Should Contain Element    xpath=//android.widget.Button[@text='Valider']
+    Click Element    xpath=//android.widget.TextView[@text='Pays et langue']
+
+Open BMW PROD on Android Connect 504
+    [Timeout]
+    Set Test Variable    ${CHANNEL}    WebMobile
+    Set Test Variable    ${OS}    Android
+    Set Test Variable    ${STATION}    RealDevice
+    Set Test Variable    ${BROWSER}    Chrome
+    Set Test Variable    ${APPLI}    BMW
+    Set Test Variable    ${DEVICE_NAME}    Boulanger_Connect504
+    Export Configuration Tags
+    Set Library Search Order    AppiumLibrary    Selenium2Library
+    Set Test Variable    ${Working_on_Real_Device}    YES
+    ${chrome_switches} =    Create List    disable-translate
+    Open Application    ${Grid Server}    &{Connect504}    &{Chrome_on_Mobile}
+    Go To Url    https://mobile.airfrance.fr/
+    Click Element    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
+    Click Element    xpath=//img[@class='bmw-header-menu-icon']
+    Click Element    xpath=//div[@id='jPanelMenu-menu']/div[2]/a[4]/span
+    Wait Until Page Contains Element    xpath=//select[@id='idMarketSelect']    10s
+    Click Element    xpath=//select[@id='idMarketSelect']
+    Click Element    xpath=//option[contains(.,'France')]
+    Click Element    xpath=//select[@id='idLangSelect']
+    Click Element    xpath=//option[@value='fr']
+    Click Element    id=idValidateButton
+
+Swipe Into View
+    [Arguments]    ${element}    ${dx}=0    ${dy}=-150    ${max_steps}=50    ${x}=100    ${y}=300
+    ...    ${duration}=500
+    ${initial_context}=    Get Current Context
+    Switch To Context    NATIVE_APP
+    : FOR    ${i}    IN RANGE    1    ${max_steps}
+    \    ${final_x} =    Evaluate    (int(${x})+int(${dx}))
+    \    ${final_y} =    Evaluate    (int(${y})+int(${dy}))
+    \    ${on_selendroid}=    Check If Test Has Tag    Selendroid
+    \    Run Keyword If    '${on_selendroid}'=='True'    SelenSwipe    ${x}    ${y}    ${final_x}
+    \    ...    ${final_y}    ${duration}
+    \    ...    ELSE    Swipe    ${x}    ${y}    ${final_x}
+    \    ...    ${final_y}    ${duration}
+    \    Comment    Swipe    ${x}    ${y}    ${final_x}    ${final_y}
+    \    ...    ${duration}
+    \    ${available_contexts}=    Get Contexts
+    \    Log    ${available_contexts}
+    \    Switch To Context    ${initial_context}
+    \    ${element_found}    ${value} =    Run Keyword and Ignore Error    Page Should Contain Element    ${element}
+    \    Log    ${element_found}
+    \    Comment    Switch To Context    NATIVE_APP
+    \    Exit For Loop If    '${element_found}'=='PASS'
+    Switch To Context    ${initial_context}
+
+SelenSwipe
+    [Arguments]    ${x}    ${y}    ${final_x}    ${final_y}    ${duration}
+    [Documentation]    Swipe using direct adb command instead of appium, due to a bug in selendroid for android device below 17
+    ${output} =    Run    adb shell input swipe ${x} ${y} ${final_x} ${final_y}
+    Log    ${output}
+
+Set Network To Data Only
+    Set Network Connection Status    4
+
+Set Network To AirPlane Mode
+    Set Network Connection Status    1
+
+Set Network To Wifi Only
+    Set Network Connection Status    2
+
+Close
+    Close All Applications
