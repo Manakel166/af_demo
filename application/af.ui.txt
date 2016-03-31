@@ -33,6 +33,8 @@ ${continents_slider}    NOT DEFINED    # Slider for Continents List
 ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    ONLY FOR B2C    # Meilleurs Offres selected on Homepage menu (eg with red highlight)
 ${button_close_privacy_popup}    Not Defined for Mobile Apps
 ${Price_on_Destination_Page}    xpath=//android.widget.TextView[@text='PRICE'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_3_cell_area_pricel']
+${flash_info_notifier_on_homepage}    TBD
+${flash_content_about_french_strike}    TBD
 
 *** Keywords ***
 Init UI for Web Mobile
@@ -56,6 +58,8 @@ Init UI for Web Mobile
     Set Test Variable    ${continents_slider}    xpath=//div[@class='hScrollerNav']
     Set Test Variable    ${button_close_privacy_popup}    xpath=//*[@id='popup_cookie_info']//div[@class='bmw-popup-close']
     Set Test Variable    ${Price_on_Destination_Page}    xpath=//a[@id='lien_tarif'][contains(.,'PRICE')]
+    Set Test Variable    ${flash_info_notifier_on_homepage}    xpath=//div[@class='bmw-warning']
+    Set Test Variable    ${flash_content_about_french_strike}    xpath=id('alerteLib')[contains(.,'appel à la grève')]
 
 Init UI for IOS
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Bienvenue
@@ -83,7 +87,7 @@ Init UI for Web
     Set Test Variable    ${Meilleures_Offres_on_Homepage}    xpath=//img[contains(@src,'/common/img/pictos/promotion.svg')]
     Set Test Variable    ${Au_Depart_de_Paris}    xpath=//select[@id='idDepartureStopover'][contains(.,'Paris PAR')]
     Set Test Variable    ${Au_Depart_de_Paris2}    xpath=//android.widget.TextView[@text='Au départ de Paris (PAR)'][@resource-id='com.airfrance.android.dinamoprd:id/ebt_promo_1_header_label']
-    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//h1[@class='titrePromoBlue'][contains(.,'Nos promotions')]
+    Set Test Variable    ${Meilleures_Offres_on_Title_Bar}    xpath=//h1[@class='titrePromoBlue'][contains(.,'Nos meilleures offres')]
     Set Test Variable    ${Tile_Europe}    xpath=//div[@id='AllPromosBlock']//div[.='Europe']
     Set Test Variable    ${ui_Entry_Rome}    xpath=//div[@id='blocContent']//a[.='Rome']
     Set Test Variable    ${Départ_Paris_PAR}    xpath=//p[contains(.,'Paris -')]
@@ -99,6 +103,8 @@ Init UI for Web
     Set Test Variable    ${B2C_MeilleursOffres_Selected_On_Homepage_Menu}    xpath=//div[@id='bg_menu_img1'][@class='bg_menu_img bg_color_red']
     Set Test Variable    ${button_close_privacy_popup}    xpath=//div[@id='tc_privacy']//div[@id='tc_privacy_btn_close']
     Set Test Variable    ${Price_on_Destination_Page}    xpath=//span[@class='prixParPersonne']//b[contains(.,'PRICE')]
+    Set Test Variable    ${flash_info_notifier_on_homepage}    xpath=//div[@id='comops_link--standard']//span[@class='label_title'][contains(.,'Flash info vols - ')]
+    Set Test Variable    ${flash_content_about_french_strike}    xpath=//div[@id='comops_link--standard']//span[@class='label'][contains(.,'appel à la grève')]
 
 Init UI for Web Mobile (WebView)
     Set Test Variable    ${Bienvenue_on_Homepage}    name=Air France - Réservation de Billet d'avion, Vol pas cher

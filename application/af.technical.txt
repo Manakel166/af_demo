@@ -57,5 +57,5 @@ Optionally, close the cookie popup
 
 Optionally, close the Survey request
     [Documentation]    If the Survey Request is shown, refuse to take the Survey
-    ${survey_dialog_present}=    Run Keyword And Return Status    Wait for Element    xpath=//*[@id='MetrixLab_overlay']    4s    1s
+    ${survey_dialog_present}=    Run Keyword And Return Status    Wait for Element    xpath=//*[@id='MetrixLab_overlay']    2s    1s
     Run Keyword If    '${survey_dialog_present}'=='True'    Click Element    xpath=//*[@href='javascript:MetrixLab_CloseBanner();']

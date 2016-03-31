@@ -132,3 +132,23 @@ On "X", do" Y"
 
 I'm on "X"
     Wait For Location    "X"
+
+On "Main Page", Check Flash Infos on French Strike
+    I'm on "Main Page"
+    Page Should Contain Element    xpath=//div[@id='comops_link--standard']//span[@class='label_title'][contains(.,'Flash info vols - ')]
+    ${displayed_message}=    Get Attribute Value    xpath=//div[@id='comops_link--standard']//span[@class='label']    text
+
+On "${City}" Destination, Check Price is "${Price}"
+    I'm on "${City}" Destination
+    ${locator_for_price}=    Replace String    ${Price_on_Destination_Page}    PRICE    ${Price}
+    Page Should Contain Element    ${locator_for_price}
+
+On "Main Page", Check that a Flash Info is displayed
+    I'm on "Main Page"
+    ${source}=    Get Source
+    Log     ${source}
+    Page Should Contain Element    ${flash_info_notifier_on_homepage}
+
+On "Main Page", Check that the Flash Info is about French Strike
+    I'm on "Main Page"
+    Page Should Contain Element    ${flash_content_about_french_strike}

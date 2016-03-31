@@ -44,9 +44,14 @@ THEN the specific selection criteria are displayed for destination "${City}"
     On "${City}" Destination, Check Destination is "${City}"
     On "${City}" Destination, Check Flight Date Calendar is displayed
     On "${City}" Destination, Check Passengers Selector is displayed
+    On "${City}" Destination, Check Price is "50 €"
 
 Actualités des Vols is showing a departure date at Today
     On "Actualité des Vols", Check the Displayed Date is Today Date
 
 GIVEN I come back to the Airfrance HomePage
     From "Actualité des Vols", Go Back to "Main Page"
+
+I shall see a Flash Info about French Strike
+    On "Main Page", Check that a Flash Info is displayed
+    On "Main Page", Check that the Flash Info is about French Strike

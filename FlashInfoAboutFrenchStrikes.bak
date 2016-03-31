@@ -1,0 +1,27 @@
+*** Settings ***
+Resource          Features/af.features.txt
+
+*** Test Cases ***
+Check Flash Info on Chrome 48 in B2C
+    [Documentation]    Open B2C PROD on Chrome 48 on Desktop
+    [Tags]    OS:Windows    Browser:Chrome    Channel:Web    Station:Desktop    Appli:B2C    DefaultChannel
+    ...    DEMO
+    [Setup]    Run Keywords    Open B2C PROD on "Chrome" version "48" on "Windows" platform    Init UI for Web
+    Check the Flash Info about French Strike
+    [Teardown]    Close
+
+Check Flash Info on Site Mobile on Android Connect 504 (Joel)
+    [Documentation]    Open BMW PROD on GRID Device
+    [Tags]    OS:Android    Browser:Chrome    Appli:BMW    Channel:WebMobile    Station:RealDevice    DefaultChannel
+    ...    DEMO
+    [Setup]    Run Keywords    Open BMW PROD on Android Connect 504    Init UI for Web Mobile
+    Check the Flash Info about French Strike
+    [Teardown]    Close
+
+Check Flash Info on App on Android Connect504
+    [Documentation]    Open Dynamo PROD on GRID Device
+    [Tags]    OS:Android    Browser:None    Appli:Dynamo    Channel:AndroidApp    Station:RealDevice    DefaultChannel
+    ...    DEMO
+    [Setup]    Run Keywords    Open Dynamo PROD on Android_Connect504
+    Check the Flash Info about French Strike
+    [Teardown]    Close

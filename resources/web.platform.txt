@@ -34,6 +34,7 @@ Open B2C PROD on "${Browser}" version "${Version}" on "${myOS}" platform
     Optionally, close the Survey request
     Comment    Page Should Contain Element    xpath=//li[@class='country'][contains(.,'France')]    #current country is France
     Comment    Page Should Contain Element    xpath=//li[@class='langueactive'][contains(.,'FR')]    #current language is FR
+    Click The Nth Element
 
 Open BMW PROD on "${Browser}" version "${Version}" on "${myOS}" platform
     ${myOS}=    Convert To Uppercase    ${myOS}

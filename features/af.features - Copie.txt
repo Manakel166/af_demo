@@ -1,0 +1,49 @@
+*** Settings ***
+Documentation     Repository of Rules (GWT)
+...               1 GWT Scenario = 1 KeyWord
+Resource          af.steps.txt
+
+*** Keywords ***
+Navigate From Paris To Rome
+    [Documentation]    As a customer, i want to initiate a trip from Paris To Rome from the Best Offer feature
+    GIVEN I am on AirFrance HomePage
+    WHEN I select « Actualité des vols »
+    THEN the page « Actualité des vols » is displayed
+    GIVEN I come back to the Airfrance HomePage
+    AND I don't select any « Origine »
+    WHEN I select « Meilleures offres »
+    THEN the list of available grouped destinations from Paris is displayed
+    GIVEN the list of available grouped destinations
+    AND I don't select any « Origine »
+    WHEN I select the area « EUROPE »
+    THEN the list of available destinations from Paris is displayed
+    GIVEN the list of available destinations from Paris
+    AND I select the "Rome" town \ in the destination list
+    THEN the specific selection criteria are displayed for destination "Rome"
+
+Check Today Flights
+    GIVEN I am on AirFrance HomePage
+    WHEN I select « Actualité des vols »
+    THEN the page « Actualité des vols » is displayed
+    AND Actualités des Vols is showing a departure date at Today
+
+Navigate From Paris To Venise
+    [Arguments]    ${arg1}
+    GIVEN I am on AirFrance HomePage
+    WHEN I select « Actualité des vols »
+    THEN the page « Actualité des vols » is displayed
+    GIVEN I come back to the Airfrance HomePage
+    AND I don't select any « Origine »
+    WHEN I select « Meilleures offres »
+    THEN the list of available grouped destinations from Paris is displayed
+    GIVEN the list of available grouped destinations
+    AND I don't select any « Origine »
+    WHEN I select the area « EUROPE »
+    THEN the list of available destinations from Paris is displayed
+    GIVEN the list of available destinations from Paris
+    I select the "Venise" town \ in the destination list
+    THEN the specific selection criteria are displayed for destination "Venise"
+
+Check the Flash Info about French Strike
+    GIVEN I am on AirFrance HomePage
+    THEN I shall see a Flash Info about French Strike
